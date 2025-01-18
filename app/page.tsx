@@ -1,101 +1,134 @@
+"use client";
+
+import { Herr_Von_Muellerhoff } from "next/font/google";
 import Image from "next/image";
+import { Rajdhani } from "next/font/google";
+import "./globals.css"
+import { FaCarBurst , FaCar } from "react-icons/fa6";
+
+// Images importing
+import logo from "../public/cropped-image.png"
+import club_clash from "../public/club_clash_every-season.avif"
+import club_info from "../public/club_info.avif"
+import club_requirementsf from "../public/requirenment.avif"
+
+import Link from "next/link";
+import { useState,useEffect} from "react";
+import { MdSettingsInputComponent } from "react-icons/md";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [menuOption,setmenuOption]=useState(false);
+  const toggleMenu = () => {
+    setmenuOption(!menuOption);
+  };
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 640) { 
+        setmenuOption(false); 
+      }
+    };
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  },);
+
+  return (
+
+    <body className="font-sans">
+   <header className="bg-black fixed w-full z-50 top-0 ">
+    <div className="container mx-auto flex items-center justify-between px-4 py-4">
+        <div className={`w-[158px] sm:w-[250px] transition-filter duration-300 fill-red-500 ${
+            menuOption ? "blur-sm" : "blur-0" // Apply blur when menu is open
+          } `}
+        >
+          <Image src={logo} alt="Uniters™ Clan" className="w-auto h-full"></Image>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        {/* <a href="#" className="text-3xl font-bold tracking-wide text-red-500">Asphalt 9</a> */}
+        <nav className="space-x-3 sm:space-x-10">
+            <a href="#home" className="text-white hover:text-red-500 text-sm font-extrabold sm:text-2xl">HOME</a>
+            <a href="#about" className="text-white hover:text-red-500 text-sm sm:text-2xl font-extrabold" >ABOUT US</a>
+            {/* <a href="#join" className="text-white hover:text-red-500 text-lg">Join</a> */}
+        </nav>
     </div>
+</header>
+   <section className="relative h-screen bg-center bg-cover pt-12">
+    <div className="absolute inset-0 bg-black bg-opacity-70"></div>
+    <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
+        <h1 className="text-4xl md:text-7xl font-bold uppercase mb-6 text-red-500">UNLEASH YOUR SPEED </h1>
+        <h3 className="text-2xl md:text-4xl mb-6">Welcome to Uniters™ Clan</h3>
+        <p className="text-md md:text-2xl mb-6">Join the Uniters™ Community and Dominate the Track!</p>
+        <a href="https://discord.gg/your-discord-link" target="_blank" className="bg-red-500 hover:bg-red-700 text-white px-6 py-3 rounded text-lg font-extrabold">Join Us on Discord</a>
+    </div>
+</section>
+<section id="about" className="py-20 px-4 bg-black text-center">
+    <div className="max-w-7xl mx-auto">
+        <h2 className="text-5xl md:text-6xl font-extrabold mb-6 text-red-500 uppercase sm:pt-20 pt-10">About Our Team</h2>
+        <p className="text-lg md:text-xl leading-relaxed mb-12 text-gray-300">
+            We are a passionate group of Asphalt 9 players looking for talented racers to join our community. Participate in thrilling tournaments, learn pro strategies, and connect with players from around the world. Whether you are a seasoned pro or just starting, there's a place for you here.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 text-red-300">
+            <div className="bg-gray-900 shadow-xl rounded-lg overflow-hidden transform hover:scale-105 transition">
+                <Image src={club_clash} alt="Club Clash" className="w-full h-fill object-cover" />
+                <div className="p-6">
+                    <h3 className="text-2xl font-bold mb-4">CLUB CLASH</h3>
+                    <p className="text-gray-400">Top 5% global club on every club clash event with good amount of team-work. <br></br>We abide to fair play and competitive Clash matches. Achieve consistent wins and build a winning legacy together!</p>
+                </div>
+            </div>
+            <div className="bg-gray-900 shadow-xl rounded-lg overflow-hidden transform hover:scale-105 transition">
+              <Image src={club_requirementsf} alt="Club_info" className="w-full h-fill object-cover" />
+                <div className="p-6">
+                    <h3 className="text-2xl font-bold mb-4"> Club Requirements</h3>
+                    <p className="text-gray-400">Uniters™ offers a range of Asphalt 9 clubs for all levels, from Rookies to Elites.<br/>We abide to reputation requirements for fair play and competitive Clash matches. Find your perfect Uniters™ club and join the action!</p>
+                </div>
+            </div>
+            <div className="bg-gray-900 shadow-xl rounded-lg overflow-hidden transform hover:scale-105 transition">
+            <Image src={club_info} alt="Club_info" className="w-full h-fill object-cover" />
+                <div className="p-6">
+                    <h3 className="text-2xl font-bold mb-4">DISCORD: Global Community</h3>
+                    <p className="text-gray-400">Connect and thrive with racers from around the world and Level up with our boosted server, pro tips, global community. Join the fun! 🎮</p>
+                </div>
+            </div>
+        </div>
+        <div className="bg-gray-900 py-12 px-6 rounded-lg shadow-lg md:flex md:items-center md:justify-between">
+          <div className="sm:w-2/3 md:pr-8">
+            <h3 className="text-4xl font-bold text-red-500 mb-6 uppercase">Why Join Us?</h3>
+            <ul className="text-left text-gray-300 space-y-4 list-disc list-inside md:ml-6">
+              <li><span className="text-red-300 font-bold">Active Leadership:</span> Experienced leaders dedicated to your growth.</li>
+              <li><span className="text-red-300 font-bold">Efficient Ranking: </span>  Learn tricks to climb the ranks faster.</li>
+              <li><span className="text-red-300 font-bold">Passionate Community</span> Connect with like-minded players.</li>
+              <li><span className="text-red-300 font-bold">Strong Team Culture: </span> Build bonds and enjoy a collaborative environment.</li>
+              <li><span className="text-red-300 font-bold">Maximize Rewards:</span> Team up to earn maximum rep, perks, and TLE benefits.</li>
+            </ul>
+          </div>
+          <div className="mt-6 md:mt-0 sm:w-2/3 w-fill flex justify-center">
+          <Image src={club_info} alt="Club_info" className="rounded-lg shadow-lg" />
+          </div>
+        </div>
+    </div>
+</section>
+  <footer id="join" className="bg-gray-900 py-6 text-center text-gray-500">
+    <p>&copy; 2025 by Uniters™ Clan | All rights reserved.</p>
+  </footer>
+  </body>
   );
 }

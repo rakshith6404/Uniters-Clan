@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily : {
+        bahnschrift: ['Bahnschrift', 'sans-serif'],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
